@@ -1,6 +1,9 @@
+import { useTranslation } from 'react-i18next';
 import { Search } from 'lucide-react';
 
 export default function BuscaInput({ valor, onChange, onSubmit, placeholder }) {
+  const { t } = useTranslation();
+
   return (
     <form
       onSubmit={(e) => {
@@ -15,9 +18,7 @@ export default function BuscaInput({ valor, onChange, onSubmit, placeholder }) {
           type="search"
           value={valor}
           onChange={(e) => onChange(e.target.value)}
-          placeholder={
-            placeholder || 'Buscar planta pelo nome (ex: jiboia, cacto...)'
-          }
+          placeholder={placeholder || t('busca.placeholder')}
           className="w-full pl-9 pr-3 py-2.5 rounded-full border border-moss/30 bg-white dark:bg-forest-light dark:border-moss/50 dark:text-cream focus:border-moss outline-none text-sm"
         />
       </div>
@@ -25,7 +26,7 @@ export default function BuscaInput({ valor, onChange, onSubmit, placeholder }) {
         type="submit"
         className="px-5 py-2.5 rounded-full bg-moss text-white text-sm font-medium hover:bg-moss-dark transition-colors shrink-0"
       >
-        Buscar
+        {t('busca.botao')}
       </button>
     </form>
   );

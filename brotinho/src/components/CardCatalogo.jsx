@@ -1,14 +1,18 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Sun, Droplet, AlertTriangle } from 'lucide-react';
 import FotoPlanta from './FotoPlanta';
 
 export default function CardCatalogo({ planta }) {
+  const { t } = useTranslation();
+
   return (
     <Link
       to={`/catalogo/planta/${planta.id}`}
       className="flip-card block h-64 [perspective:1000px] group"
     >
       <div className="flip-card-inner relative w-full h-full rounded-2xl shadow-sm">
+        {/* Frente */}
         <div className="flip-card-front absolute inset-0 rounded-2xl overflow-hidden bg-white dark:bg-forest-light border border-black/5 dark:border-white/10 flex flex-col">
           <FotoPlanta
             src={planta.image_url}
@@ -30,6 +34,7 @@ export default function CardCatalogo({ planta }) {
           </div>
         </div>
 
+        {/* Verso — resumo de cuidados (NICE-02) */}
         <div className="flip-card-back absolute inset-0 rounded-2xl bg-forest text-cream p-4 flex flex-col justify-center gap-3">
           <p className="font-display font-medium mb-1">{planta.common_name}</p>
           <div className="flex items-center gap-2 text-sm">
@@ -38,11 +43,13 @@ export default function CardCatalogo({ planta }) {
           </div>
           <div className="flex items-center gap-2 text-sm">
             <Droplet className="w-4 h-4 text-moss-light" />
-            <span>a cada {planta.watering_days} dias</span>
+            <span>{t('ficha.aCadaDias', { dias: planta.watering_days })}</span>
           </div>
           <div className="flex items-center gap-2 text-sm">
             <AlertTriangle className="w-4 h-4 text-critical" />
-            <span>{planta.toxicity}</span>
+            <span>
+              {planta.toxic ? t('ficha.toxica') : t('ficha.naoToxica')}
+            </span>
           </div>
         </div>
       </div>

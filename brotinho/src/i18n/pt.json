@@ -1,0 +1,56 @@
+{
+  "nav": {
+    "catalogo": "Catálogo",
+    "minhasPlantas": "Minhas plantas",
+    "sobre": "Sobre"
+  },
+  "footer": {
+    "tagline": "Cuide com carinho, veja brotar.",
+    "credito": "Brotinho © {{ano}} — dados via Perenual API"
+  },
+  "home": {
+    "titulo": "Cuide com carinho, veja brotar",
+    "subtitulo": "Descubra os cuidados de qualquer planta e acompanhe a saúde das suas, tudo em um só lugar.",
+    "explorarCatalogo": "Explorar catálogo",
+    "verCatalogo": "Ver catálogo"
+  },
+  "busca": {
+    "placeholder": "Buscar planta pelo nome (ex: jiboia, cacto...)",
+    "botao": "Buscar"
+  },
+  "catalogo": {
+    "titulo": "Catálogo",
+    "subtitulo": "Busque qualquer espécie e veja a ficha completa de cuidados.",
+    "carregando": "Carregando plantas…",
+    "vazioTitulo": "Nenhuma planta encontrada",
+    "vazioComBusca": "Tente buscar por outro nome popular ou científico.",
+    "vazioSemBusca": "Não foi possível carregar o catálogo agora."
+  },
+  "ficha": {
+    "carregando": "Carregando ficha…",
+    "voltar": "Voltar",
+    "naoEncontradaTitulo": "Planta não encontrada",
+    "naoEncontradaDesc": "Essa espécie não foi localizada no catálogo.",
+    "voltarCatalogo": "Voltar ao catálogo",
+    "cuidados": "Cuidados",
+    "luminosidade": "Luminosidade",
+    "frequenciaRega": "Frequência de rega",
+    "temperatura": "Temperatura",
+    "toxicidade": "Toxicidade",
+    "toxica": "Tóxica para pets",
+    "naoToxica": "Não tóxica",
+    "dificuldade": "Dificuldade",
+    "plantasRelacionadas": "Plantas relacionadas",
+    "aCadaDias": "a cada {{dias}} dias"
+  },
+  "sobre": {
+    "titulo": "Sobre o Brotinho",
+    "paragrafo1": "O Brotinho nasceu de um problema simples: quem cuida de plantas em casa não tem um lugar centralizado para consultar os cuidados de cada espécie e lembrar da rotina de rega.",
+    "creditos": "Projeto desenvolvido para a disciplina de Desenvolvimento Web Frontend — UFRN/ECT, por Viviane Stephane Pinheiro Novo."
+  },
+  "notFound": {
+    "subtitulo": "Essa página não brotou por aqui.",
+    "voltarHome": "Voltar para a home"
+  },
+  "emBreve": { "mensagem": "{{titulo}} chega na próxima semana 🌱" }
+}

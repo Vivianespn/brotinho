@@ -1,0 +1,56 @@
+{
+  "nav": {
+    "catalogo": "Catalog",
+    "minhasPlantas": "My plants",
+    "sobre": "About"
+  },
+  "footer": {
+    "tagline": "Care with love, watch it grow.",
+    "credito": "Brotinho © {{ano}} — data via Perenual API"
+  },
+  "home": {
+    "titulo": "Care with love, watch it grow",
+    "subtitulo": "Discover the care each plant needs and track the health of your own, all in one place.",
+    "explorarCatalogo": "Explore catalog",
+    "verCatalogo": "View catalog"
+  },
+  "busca": {
+    "placeholder": "Search a plant by name (e.g. pothos, cactus...)",
+    "botao": "Search"
+  },
+  "catalogo": {
+    "titulo": "Catalog",
+    "subtitulo": "Search any species and see its full care sheet.",
+    "carregando": "Loading plants…",
+    "vazioTitulo": "No plants found",
+    "vazioComBusca": "Try searching a different common or scientific name.",
+    "vazioSemBusca": "Couldn't load the catalog right now."
+  },
+  "ficha": {
+    "carregando": "Loading sheet…",
+    "voltar": "Back",
+    "naoEncontradaTitulo": "Plant not found",
+    "naoEncontradaDesc": "This species wasn't found in the catalog.",
+    "voltarCatalogo": "Back to catalog",
+    "cuidados": "Care",
+    "luminosidade": "Sunlight",
+    "frequenciaRega": "Watering frequency",
+    "temperatura": "Temperature",
+    "toxicidade": "Toxicity",
+    "toxica": "Toxic to pets",
+    "naoToxica": "Non-toxic",
+    "dificuldade": "Difficulty",
+    "plantasRelacionadas": "Related plants",
+    "aCadaDias": "every {{dias}} days"
+  },
+  "sobre": {
+    "titulo": "About Brotinho",
+    "paragrafo1": "Brotinho came from a simple problem: people who care for plants at home don't have a central place to check each species' care and remember the watering routine.",
+    "creditos": "Project built for the Frontend Web Development course — UFRN/ECT, by Viviane Stephane Pinheiro Novo."
+  },
+  "notFound": {
+    "subtitulo": "This page didn't sprout here.",
+    "voltarHome": "Back to home"
+  },
+  "emBreve": { "mensagem": "{{titulo}} is coming next week 🌱" }
+}

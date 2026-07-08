@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   ArrowLeft,
   Sun,
@@ -11,9 +12,17 @@ import FotoPlanta from '../components/FotoPlanta';
 import EstadoVazio from '../components/EstadoVazio';
 import { buscarDetalhesPlanta, listarCatalogo } from '../services/perenualApi';
 
-const NIVEIS_DIFICULDADE = { Fácil: 2, Moderada: 3, Difícil: 5 };
+const NIVEIS_DIFICULDADE = {
+  Fácil: 2,
+  Moderada: 3,
+  Difícil: 5,
+  Easy: 2,
+  Moderate: 3,
+  Difficult: 5,
+};
 
 export default function FichaPlanta() {
+  const { t, i18n } = useTranslation();
   const { id } = useParams();
   const [planta, setPlanta] = useState(null);
   const [relacionadas, setRelacionadas] = useState([]);
@@ -21,32 +30,34 @@ export default function FichaPlanta() {
 
   useEffect(() => {
     setCarregando(true);
-    buscarDetalhesPlanta(id).then((dados) => {
+    buscarDetalhesPlanta(id, i18n.language).then((dados) => {
       setPlanta(dados);
       setCarregando(false);
     });
-    listarCatalogo().then(({ resultados }) =>
+    listarCatalogo(i18n.language).then(({ resultados }) =>
       setRelacionadas(resultados.filter((p) => p.id !== id).slice(0, 3)),
     );
-  }, [id]);
+  }, [id, i18n.language]);
 
   if (carregando) {
     return (
-      <p className="text-center text-sm text-ink/50 py-12">Carregando ficha…</p>
+      <p className="text-center text-sm text-ink/50 py-12">
+        {t('ficha.carregando')}
+      </p>
     );
   }
 
   if (!planta) {
     return (
       <EstadoVazio
-        titulo="Planta não encontrada"
-        descricao="Essa espécie não foi localizada no catálogo."
+        titulo={t('ficha.naoEncontradaTitulo')}
+        descricao={t('ficha.naoEncontradaDesc')}
         acao={
           <Link
             to="/catalogo"
             className="text-moss font-medium hover:underline text-sm"
           >
-            Voltar ao catálogo
+            {t('ficha.voltarCatalogo')}
           </Link>
         }
       />
@@ -61,7 +72,7 @@ export default function FichaPlanta() {
         to="/catalogo"
         className="inline-flex items-center gap-1.5 text-sm text-moss font-medium hover:underline w-fit"
       >
-        <ArrowLeft className="w-4 h-4" /> Voltar
+        <ArrowLeft className="w-4 h-4" /> {t('ficha.voltar')}
       </Link>
 
       <FotoPlanta
@@ -83,13 +94,13 @@ export default function FichaPlanta() {
       </div>
 
       <h2 className="font-display text-lg font-medium border-b border-black/10 pb-2">
-        Cuidados
+        {t('ficha.cuidados')}
       </h2>
 
       <div className="grid grid-cols-2 gap-3">
         <div className="rounded-xl border border-black/10 p-3">
           <div className="flex items-center gap-1.5 text-xs text-ink/50 mb-1">
-            <Sun className="w-3.5 h-3.5" /> Luminosidade
+            <Sun className="w-3.5 h-3.5" /> {t('ficha.luminosidade')}
           </div>
           <p className="font-medium capitalize">
             {planta.sunlight?.join(', ')}
@@ -97,39 +108,46 @@ export default function FichaPlanta() {
         </div>
         <div className="rounded-xl border border-black/10 p-3">
           <div className="flex items-center gap-1.5 text-xs text-ink/50 mb-1">
-            <Droplet className="w-3.5 h-3.5" /> Frequência de rega
+            <Droplet className="w-3.5 h-3.5" /> {t('ficha.frequenciaRega')}
           </div>
-          <p className="font-medium">a cada {planta.watering_days} dias</p>
+          <p className="font-medium">
+            {t('ficha.aCadaDias', { dias: planta.watering_days })}
+          </p>
         </div>
         <div className="rounded-xl border border-black/10 p-3">
           <div className="flex items-center gap-1.5 text-xs text-ink/50 mb-1">
-            <Thermometer className="w-3.5 h-3.5" /> Temperatura
+            <Thermometer className="w-3.5 h-3.5" /> {t('ficha.temperatura')}
           </div>
           <p className="font-medium">{planta.temperature}</p>
         </div>
         <div
-          className={`rounded-xl border p-3 ${planta.toxicity === 'Tóxica para pets' ? 'border-critical/40 bg-critical-bg' : 'border-black/10'}`}
+          className={`rounded-xl border p-3 ${
+            planta.toxic
+              ? 'border-critical/40 bg-critical-bg'
+              : 'border-black/10'
+          }`}
         >
           <div className="flex items-center gap-1.5 text-xs text-ink/50 mb-1">
-            <AlertTriangle className="w-3.5 h-3.5" /> Toxicidade
+            <AlertTriangle className="w-3.5 h-3.5" /> {t('ficha.toxicidade')}
           </div>
-          <p
-            className={`font-medium ${planta.toxicity === 'Tóxica para pets' ? 'text-critical' : ''}`}
-          >
-            {planta.toxicity}
+          <p className={`font-medium ${planta.toxic ? 'text-critical' : ''}`}>
+            {planta.toxic ? t('ficha.toxica') : t('ficha.naoToxica')}
           </p>
         </div>
       </div>
 
       <div>
         <p className="text-xs text-ink/50 mb-2">
-          Dificuldade: <span className="font-medium">{planta.difficulty}</span>
+          {t('ficha.dificuldade')}:{' '}
+          <span className="font-medium">{planta.difficulty}</span>
         </p>
         <div className="flex gap-1">
           {Array.from({ length: 5 }).map((_, i) => (
             <span
               key={i}
-              className={`w-6 h-2.5 rounded-full ${i < nivelDificuldade ? 'bg-moss' : 'bg-black/10'}`}
+              className={`w-6 h-2.5 rounded-full ${
+                i < nivelDificuldade ? 'bg-moss' : 'bg-black/10'
+              }`}
             />
           ))}
         </div>
@@ -138,7 +156,7 @@ export default function FichaPlanta() {
       {relacionadas.length > 0 && (
         <div>
           <h2 className="font-display text-lg font-medium border-b border-black/10 pb-2 mb-3">
-            Plantas relacionadas
+            {t('ficha.plantasRelacionadas')}
           </h2>
           <div className="flex gap-3 overflow-x-auto pb-1">
             {relacionadas.map((r) => (

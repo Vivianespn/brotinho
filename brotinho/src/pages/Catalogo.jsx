@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import BuscaInput from '../components/BuscaInput';
 import CardCatalogo from '../components/CardCatalogo';
 import EstadoVazio from '../components/EstadoVazio';
 import { buscarPlantas, listarCatalogo } from '../services/perenualApi';
 
 export default function Catalogo() {
+  const { t, i18n } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
   const queryInicial = searchParams.get('q') || '';
   const [busca, setBusca] = useState(queryInicial);
@@ -16,13 +18,14 @@ export default function Catalogo() {
   useEffect(() => {
     setCarregando(true);
     const carregar = queryInicial
-      ? buscarPlantas(queryInicial)
-      : listarCatalogo();
+      ? buscarPlantas(queryInicial, i18n.language)
+      : listarCatalogo(i18n.language);
+
     carregar.then(({ resultados }) => {
       setResultados(resultados);
       setCarregando(false);
     });
-  }, [queryInicial]);
+  }, [queryInicial, i18n.language]);
 
   function handleSubmit(termo) {
     setBuscou(Boolean(termo.trim()));
@@ -32,24 +35,22 @@ export default function Catalogo() {
   return (
     <div className="flex flex-col gap-8">
       <div>
-        <h1 className="font-display text-2xl font-semibold mb-1">Catálogo</h1>
-        <p className="text-sm text-ink/60 mb-4">
-          Busque qualquer espécie e veja a ficha completa de cuidados.
-        </p>
+        <h1 className="font-display text-2xl font-semibold mb-1">
+          {t('catalogo.titulo')}
+        </h1>
+        <p className="text-sm text-ink/60 mb-4">{t('catalogo.subtitulo')}</p>
         <BuscaInput valor={busca} onChange={setBusca} onSubmit={handleSubmit} />
       </div>
 
       {carregando ? (
         <p className="text-center text-sm text-ink/50 py-12">
-          Carregando plantas…
+          {t('catalogo.carregando')}
         </p>
       ) : resultados.length === 0 ? (
         <EstadoVazio
-          titulo="Nenhuma planta encontrada"
+          titulo={t('catalogo.vazioTitulo')}
           descricao={
-            buscou
-              ? 'Tente buscar por outro nome popular ou científico.'
-              : 'Não foi possível carregar o catálogo agora.'
+            buscou ? t('catalogo.vazioComBusca') : t('catalogo.vazioSemBusca')
           }
         />
       ) : (
