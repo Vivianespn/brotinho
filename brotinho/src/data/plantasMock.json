@@ -1,0 +1,122 @@
+[
+  {
+    "id": "mock-1",
+    "common_name": "Espada-de-são-jorge",
+    "scientific_name": ["Dracaena trifasciata"],
+    "image_url": null,
+    "sunlight": ["indireta", "sombra parcial"],
+    "watering": "Baixa",
+    "watering_days": 14,
+    "difficulty": "Fácil",
+    "toxicity": "Tóxica para pets",
+    "temperature": "15°C - 30°C"
+  },
+  {
+    "id": "mock-2",
+    "common_name": "Jiboia",
+    "scientific_name": ["Epipremnum aureum"],
+    "image_url": null,
+    "sunlight": ["indireta"],
+    "watering": "Média",
+    "watering_days": 7,
+    "difficulty": "Fácil",
+    "toxicity": "Tóxica para pets",
+    "temperature": "18°C - 29°C"
+  },
+  {
+    "id": "mock-3",
+    "common_name": "Costela-de-adão",
+    "scientific_name": ["Monstera deliciosa"],
+    "image_url": null,
+    "sunlight": ["indireta", "filtrada"],
+    "watering": "Média",
+    "watering_days": 7,
+    "difficulty": "Fácil",
+    "toxicity": "Tóxica para pets",
+    "temperature": "18°C - 27°C"
+  },
+  {
+    "id": "mock-4",
+    "common_name": "Cacto-mandacaru",
+    "scientific_name": ["Cereus jamacaru"],
+    "image_url": null,
+    "sunlight": ["sol pleno"],
+    "watering": "Muito baixa",
+    "watering_days": 21,
+    "difficulty": "Fácil",
+    "toxicity": "Não tóxica",
+    "temperature": "20°C - 35°C"
+  },
+  {
+    "id": "mock-5",
+    "common_name": "Violeta africana",
+    "scientific_name": ["Saintpaulia ionantha"],
+    "image_url": null,
+    "sunlight": ["indireta"],
+    "watering": "Média",
+    "watering_days": 5,
+    "difficulty": "Moderada",
+    "toxicity": "Não tóxica",
+    "temperature": "18°C - 24°C"
+  },
+  {
+    "id": "mock-6",
+    "common_name": "Samambaia",
+    "scientific_name": ["Nephrolepis exaltata"],
+    "image_url": null,
+    "sunlight": ["sombra parcial"],
+    "watering": "Alta",
+    "watering_days": 3,
+    "difficulty": "Moderada",
+    "toxicity": "Não tóxica",
+    "temperature": "16°C - 24°C"
+  },
+  {
+    "id": "mock-7",
+    "common_name": "Manjericão",
+    "scientific_name": ["Ocimum basilicum"],
+    "image_url": null,
+    "sunlight": ["sol pleno", "indireta"],
+    "watering": "Média",
+    "watering_days": 2,
+    "difficulty": "Fácil",
+    "toxicity": "Não tóxica",
+    "temperature": "18°C - 30°C"
+  },
+  {
+    "id": "mock-8",
+    "common_name": "Zamioculca",
+    "scientific_name": ["Zamioculcas zamiifolia"],
+    "image_url": null,
+    "sunlight": ["sombra parcial", "indireta"],
+    "watering": "Muito baixa",
+    "watering_days": 18,
+    "difficulty": "Fácil",
+    "toxicity": "Tóxica para pets",
+    "temperature": "18°C - 26°C"
+  },
+  {
+    "id": "mock-9",
+    "common_name": "Orquídea-borboleta",
+    "scientific_name": ["Phalaenopsis amabilis"],
+    "image_url": null,
+    "sunlight": ["indireta", "filtrada"],
+    "watering": "Baixa",
+    "watering_days": 10,
+    "difficulty": "Moderada",
+    "toxicity": "Não tóxica",
+    "temperature": "18°C - 27°C"
+  },
+  {
+    "id": "mock-10",
+    "common_name": "Mammilaria (cacto-do-quarto)",
+    "scientific_name": ["Mammillaria gracilis"],
+    "image_url": null,
+    "sunlight": ["sol pleno", "indireta"],
+    "watering": "Muito baixa",
+    "watering_days": 15,
+    "difficulty": "Fácil",
+    "toxicity": "Não tóxica",
+    "temperature": "18°C - 32°C"
+  }
+]
