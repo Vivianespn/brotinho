@@ -1,7 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ArrowLeft, Sun, Droplet, AlertTriangle, Clock } from 'lucide-react';
+import {
+  ArrowLeft,
+  Sun,
+  Droplet,
+  AlertTriangle,
+  Clock,
+  Info,
+} from 'lucide-react';
 import FotoPlanta from '../components/FotoPlanta';
 import EstadoVazio from '../components/EstadoVazio';
 import { buscarDetalhesPlanta, listarCatalogo } from '../services/perenualApi';
@@ -69,6 +76,12 @@ export default function FichaPlanta() {
   const naoInformado =
     i18n.language === 'en' ? 'Not available' : 'Não informado';
   const nivelDificuldade = NIVEIS_DIFICULDADE[planta.difficulty] || 0;
+  const idNumerico = Number(planta.id);
+  const foraDoPlanoGratuito =
+    !Number.isNaN(idNumerico) &&
+    idNumerico > 3000 &&
+    !planta.sunlight &&
+    !planta.watering_days;
 
   return (
     <div className="flex flex-col gap-6 max-w-2xl mx-auto">
@@ -85,6 +98,18 @@ export default function FichaPlanta() {
           <span>
             Limite diário da Perenual atingido — mostrando um dado equivalente
             do catálogo local em vez do real.
+          </span>
+        </div>
+      )}
+
+      {foraDoPlanoGratuito && (
+        <div className="flex items-start gap-2 rounded-xl bg-warn-bg text-ink text-sm p-3">
+          <Info className="w-4 h-4 mt-0.5 shrink-0" />
+          <span>
+            Essa espécie tem ID acima de 3.000 no banco da Perenual — o plano
+            gratuito só libera dados completos de cuidados pras primeiras 3.000
+            espécies. Foto e nome vêm normalmente, mas luminosidade, rega e
+            toxicidade não estão disponíveis nesse plano.
           </span>
         </div>
       )}

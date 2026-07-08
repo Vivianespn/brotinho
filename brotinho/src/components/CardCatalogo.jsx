@@ -4,7 +4,9 @@ import { Sun, Droplet, AlertTriangle, Info } from 'lucide-react';
 import FotoPlanta from './FotoPlanta';
 
 export default function CardCatalogo({ planta }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const toxicidadeDesconhecida =
+    planta.toxic === null || planta.toxic === undefined;
 
   return (
     <Link
@@ -58,7 +60,13 @@ export default function CardCatalogo({ planta }) {
               <div className="flex items-center gap-2 text-sm">
                 <AlertTriangle className="w-4 h-4 text-critical" />
                 <span>
-                  {planta.toxic ? t('ficha.toxica') : t('ficha.naoToxica')}
+                  {toxicidadeDesconhecida
+                    ? i18n.language === 'en'
+                      ? 'Toxicity not confirmed'
+                      : 'Toxicidade não confirmada'
+                    : planta.toxic
+                      ? t('ficha.toxica')
+                      : t('ficha.naoToxica')}
                 </span>
               </div>
             </>

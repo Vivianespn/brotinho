@@ -1,139 +1,241 @@
 [
   {
     "id": "mock-1",
-    "common_name": { "pt": "Espada-de-são-jorge", "en": "Snake Plant" },
+    "common_name": {
+      "pt": "Espada-de-são-jorge",
+      "en": "Snake Plant"
+    },
     "scientific_name": ["Dracaena trifasciata"],
-    "image_url": null,
+    "image_url": "/plantas-mock/espada-de-sao-jorge.jpg",
     "sunlight": {
       "pt": ["luz indireta", "sombra parcial"],
       "en": ["indirect light", "partial shade"]
     },
-    "watering": { "pt": "Baixa", "en": "Low" },
+    "watering": {
+      "pt": "Baixa",
+      "en": "Low"
+    },
     "watering_days": 14,
-    "difficulty": { "pt": "Fácil", "en": "Easy" },
+    "difficulty": {
+      "pt": "Fácil",
+      "en": "Easy"
+    },
     "toxic": true,
     "temperature": "15°C - 30°C"
   },
   {
     "id": "mock-2",
-    "common_name": { "pt": "Jiboia", "en": "Pothos" },
+    "common_name": {
+      "pt": "Jiboia",
+      "en": "Pothos"
+    },
     "scientific_name": ["Epipremnum aureum"],
-    "image_url": null,
-    "sunlight": { "pt": ["luz indireta"], "en": ["indirect light"] },
-    "watering": { "pt": "Média", "en": "Average" },
+    "image_url": "/plantas-mock/jiboia.jpg",
+    "sunlight": {
+      "pt": ["luz indireta"],
+      "en": ["indirect light"]
+    },
+    "watering": {
+      "pt": "Média",
+      "en": "Average"
+    },
     "watering_days": 7,
-    "difficulty": { "pt": "Fácil", "en": "Easy" },
+    "difficulty": {
+      "pt": "Fácil",
+      "en": "Easy"
+    },
     "toxic": true,
     "temperature": "18°C - 29°C"
   },
   {
     "id": "mock-3",
-    "common_name": { "pt": "Costela-de-adão", "en": "Swiss Cheese Plant" },
+    "common_name": {
+      "pt": "Costela-de-adão",
+      "en": "Swiss Cheese Plant"
+    },
     "scientific_name": ["Monstera deliciosa"],
-    "image_url": null,
+    "image_url": "/plantas-mock/costela-de-adao.jfif",
     "sunlight": {
       "pt": ["luz indireta", "luz filtrada"],
       "en": ["indirect light", "filtered light"]
     },
-    "watering": { "pt": "Média", "en": "Average" },
+    "watering": {
+      "pt": "Média",
+      "en": "Average"
+    },
     "watering_days": 7,
-    "difficulty": { "pt": "Fácil", "en": "Easy" },
+    "difficulty": {
+      "pt": "Fácil",
+      "en": "Easy"
+    },
     "toxic": true,
     "temperature": "18°C - 27°C"
   },
   {
     "id": "mock-4",
-    "common_name": { "pt": "Cacto-mandacaru", "en": "Mandacaru Cactus" },
+    "common_name": {
+      "pt": "Cacto-mandacaru",
+      "en": "Mandacaru Cactus"
+    },
     "scientific_name": ["Cereus jamacaru"],
-    "image_url": null,
-    "sunlight": { "pt": ["sol pleno"], "en": ["full sun"] },
-    "watering": { "pt": "Muito baixa", "en": "Very low" },
+    "image_url": "/plantas-mock/cacto-mandacaru.jpg",
+    "sunlight": {
+      "pt": ["sol pleno"],
+      "en": ["full sun"]
+    },
+    "watering": {
+      "pt": "Muito baixa",
+      "en": "Very low"
+    },
     "watering_days": 21,
-    "difficulty": { "pt": "Fácil", "en": "Easy" },
+    "difficulty": {
+      "pt": "Fácil",
+      "en": "Easy"
+    },
     "toxic": false,
     "temperature": "20°C - 35°C"
   },
   {
     "id": "mock-5",
-    "common_name": { "pt": "Violeta africana", "en": "African Violet" },
+    "common_name": {
+      "pt": "Violeta africana",
+      "en": "African Violet"
+    },
     "scientific_name": ["Saintpaulia ionantha"],
-    "image_url": null,
-    "sunlight": { "pt": ["luz indireta"], "en": ["indirect light"] },
-    "watering": { "pt": "Média", "en": "Average" },
+    "image_url": "/plantas-mock/violeta-africana.jfif",
+    "sunlight": {
+      "pt": ["luz indireta"],
+      "en": ["indirect light"]
+    },
+    "watering": {
+      "pt": "Média",
+      "en": "Average"
+    },
     "watering_days": 5,
-    "difficulty": { "pt": "Moderada", "en": "Moderate" },
+    "difficulty": {
+      "pt": "Moderada",
+      "en": "Moderate"
+    },
     "toxic": false,
     "temperature": "18°C - 24°C"
   },
   {
     "id": "mock-6",
-    "common_name": { "pt": "Samambaia", "en": "Boston Fern" },
+    "common_name": {
+      "pt": "Samambaia",
+      "en": "Boston Fern"
+    },
     "scientific_name": ["Nephrolepis exaltata"],
-    "image_url": null,
-    "sunlight": { "pt": ["sombra parcial"], "en": ["partial shade"] },
-    "watering": { "pt": "Alta", "en": "High" },
+    "image_url": "/plantas-mock/samambaia.jpg",
+    "sunlight": {
+      "pt": ["sombra parcial"],
+      "en": ["partial shade"]
+    },
+    "watering": {
+      "pt": "Alta",
+      "en": "High"
+    },
     "watering_days": 3,
-    "difficulty": { "pt": "Moderada", "en": "Moderate" },
+    "difficulty": {
+      "pt": "Moderada",
+      "en": "Moderate"
+    },
     "toxic": false,
     "temperature": "16°C - 24°C"
   },
   {
     "id": "mock-7",
-    "common_name": { "pt": "Manjericão", "en": "Basil" },
+    "common_name": {
+      "pt": "Manjericão",
+      "en": "Basil"
+    },
     "scientific_name": ["Ocimum basilicum"],
-    "image_url": null,
+    "image_url": "/plantas-mock/manjericao.jfif",
     "sunlight": {
       "pt": ["sol pleno", "luz indireta"],
       "en": ["full sun", "indirect light"]
     },
-    "watering": { "pt": "Média", "en": "Average" },
+    "watering": {
+      "pt": "Média",
+      "en": "Average"
+    },
     "watering_days": 2,
-    "difficulty": { "pt": "Fácil", "en": "Easy" },
+    "difficulty": {
+      "pt": "Fácil",
+      "en": "Easy"
+    },
     "toxic": false,
     "temperature": "18°C - 30°C"
   },
   {
     "id": "mock-8",
-    "common_name": { "pt": "Zamioculca", "en": "ZZ Plant" },
+    "common_name": {
+      "pt": "Zamioculca",
+      "en": "ZZ Plant"
+    },
     "scientific_name": ["Zamioculcas zamiifolia"],
-    "image_url": null,
+    "image_url": "/plantas-mock/zamioculca.jpg",
     "sunlight": {
       "pt": ["sombra parcial", "luz indireta"],
       "en": ["partial shade", "indirect light"]
     },
-    "watering": { "pt": "Muito baixa", "en": "Very low" },
+    "watering": {
+      "pt": "Muito baixa",
+      "en": "Very low"
+    },
     "watering_days": 18,
-    "difficulty": { "pt": "Fácil", "en": "Easy" },
+    "difficulty": {
+      "pt": "Fácil",
+      "en": "Easy"
+    },
     "toxic": true,
     "temperature": "18°C - 26°C"
   },
   {
     "id": "mock-9",
-    "common_name": { "pt": "Orquídea-borboleta", "en": "Moth Orchid" },
+    "common_name": {
+      "pt": "Orquídea-borboleta",
+      "en": "Moth Orchid"
+    },
     "scientific_name": ["Phalaenopsis amabilis"],
-    "image_url": null,
+    "image_url": "/plantas-mock/orquidea-borboleta.jpg",
     "sunlight": {
       "pt": ["luz indireta", "luz filtrada"],
       "en": ["indirect light", "filtered light"]
     },
-    "watering": { "pt": "Baixa", "en": "Low" },
+    "watering": {
+      "pt": "Baixa",
+      "en": "Low"
+    },
     "watering_days": 10,
-    "difficulty": { "pt": "Moderada", "en": "Moderate" },
+    "difficulty": {
+      "pt": "Moderada",
+      "en": "Moderate"
+    },
     "toxic": false,
     "temperature": "18°C - 27°C"
   },
   {
     "id": "mock-10",
-    "common_name": { "pt": "Cacto-do-quarto", "en": "Powder Puff Cactus" },
+    "common_name": {
+      "pt": "Cacto-do-quarto",
+      "en": "Powder Puff Cactus"
+    },
     "scientific_name": ["Mammillaria gracilis"],
-    "image_url": null,
+    "image_url": "/plantas-mock/cacto-do-quarto.jpg",
     "sunlight": {
       "pt": ["sol pleno", "luz indireta"],
       "en": ["full sun", "indirect light"]
     },
-    "watering": { "pt": "Muito baixa", "en": "Very low" },
+    "watering": {
+      "pt": "Muito baixa",
+      "en": "Very low"
+    },
     "watering_days": 15,
-    "difficulty": { "pt": "Fácil", "en": "Easy" },
+    "difficulty": {
+      "pt": "Fácil",
+      "en": "Easy"
+    },
     "toxic": false,
     "temperature": "18°C - 32°C"
   }
