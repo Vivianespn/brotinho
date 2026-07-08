@@ -38,12 +38,14 @@ export default function Catalogo() {
         <h1 className="font-display text-2xl font-semibold mb-1">
           {t('catalogo.titulo')}
         </h1>
-        <p className="text-sm text-ink/60 mb-4">{t('catalogo.subtitulo')}</p>
+        <p className="text-sm text-ink/60 dark:text-cream/60 mb-4">
+          {t('catalogo.subtitulo')}
+        </p>
         <BuscaInput valor={busca} onChange={setBusca} onSubmit={handleSubmit} />
       </div>
 
       {carregando ? (
-        <p className="text-center text-sm text-ink/50 py-12">
+        <p className="text-center text-sm text-ink/50 dark:text-cream/50 py-12">
           {t('catalogo.carregando')}
         </p>
       ) : resultados.length === 0 ? (

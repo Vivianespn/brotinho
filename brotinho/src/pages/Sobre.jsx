@@ -10,8 +10,10 @@ export default function Sobre() {
       <h1 className="font-display text-2xl font-semibold">
         {t('sobre.titulo')}
       </h1>
-      <p className="text-ink/70">{t('sobre.paragrafo1')}</p>
-      <p className="text-sm text-ink/50 mt-2">{t('sobre.creditos')}</p>
+      <p className="text-ink/70 dark:text-cream/70">{t('sobre.paragrafo1')}</p>
+      <p className="text-sm text-ink/50 dark:text-cream/50 mt-2">
+        {t('sobre.creditos')}
+      </p>
     </div>
   );
 }

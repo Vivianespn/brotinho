@@ -35,7 +35,7 @@ export default function FichaPlanta() {
 
   if (carregando) {
     return (
-      <p className="text-center text-sm text-ink/50 py-12">
+      <p className="text-center text-sm text-ink/50 dark:text-cream/50 py-12">
         {t('ficha.carregando')}
       </p>
     );
@@ -94,34 +94,34 @@ export default function FichaPlanta() {
         alt={planta.common_name}
         className="w-full h-64 object-cover rounded-2xl"
       />
-      <div className="hidden w-full h-64 rounded-2xl bg-sage" />
+      <div className="hidden w-full h-64 rounded-2xl bg-sage dark:bg-forest-light" />
 
       <div>
         <h1 className="font-display text-2xl font-semibold">
           {planta.common_name}
         </h1>
         {planta.scientific_name?.[0] && (
-          <p className="text-sm italic text-ink/50">
+          <p className="text-sm italic text-ink/50 dark:text-cream/50">
             {planta.scientific_name[0]}
           </p>
         )}
       </div>
 
-      <h2 className="font-display text-lg font-medium border-b border-black/10 pb-2">
+      <h2 className="font-display text-lg font-medium border-b border-black/10 dark:border-white/10 pb-2">
         {t('ficha.cuidados')}
       </h2>
 
-      <div className="grid grid-cols-2 gap-3">
-        <div className="rounded-xl border border-black/10 p-3">
-          <div className="flex items-center gap-1.5 text-xs text-ink/50 mb-1">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="rounded-xl border border-black/10 dark:border-white/10 p-3">
+          <div className="flex items-center gap-1.5 text-xs text-ink/50 dark:text-cream/50 mb-1">
             <Sun className="w-3.5 h-3.5" /> {t('ficha.luminosidade')}
           </div>
           <p className="font-medium capitalize">
             {planta.sunlight?.join(', ') || naoInformado}
           </p>
         </div>
-        <div className="rounded-xl border border-black/10 p-3">
-          <div className="flex items-center gap-1.5 text-xs text-ink/50 mb-1">
+        <div className="rounded-xl border border-black/10 dark:border-white/10 p-3">
+          <div className="flex items-center gap-1.5 text-xs text-ink/50 dark:text-cream/50 mb-1">
             <Droplet className="w-3.5 h-3.5" /> {t('ficha.frequenciaRega')}
           </div>
           <p className="font-medium">
@@ -134,10 +134,10 @@ export default function FichaPlanta() {
           className={`rounded-xl border p-3 ${
             planta.toxic
               ? 'border-critical/40 bg-critical-bg'
-              : 'border-black/10'
+              : 'border-black/10 dark:border-white/10'
           }`}
         >
-          <div className="flex items-center gap-1.5 text-xs text-ink/50 mb-1">
+          <div className="flex items-center gap-1.5 text-xs text-ink/50 dark:text-cream/50 mb-1">
             <AlertTriangle className="w-3.5 h-3.5" /> {t('ficha.toxicidade')}
           </div>
           <p className={`font-medium ${planta.toxic ? 'text-critical' : ''}`}>
@@ -148,8 +148,8 @@ export default function FichaPlanta() {
                 : t('ficha.naoToxica')}
           </p>
         </div>
-        <div className="rounded-xl border border-black/10 p-3">
-          <div className="text-xs text-ink/50 mb-1">
+        <div className="rounded-xl border border-black/10 dark:border-white/10 p-3">
+          <div className="text-xs text-ink/50 dark:text-cream/50 mb-1">
             {t('ficha.dificuldade')}
           </div>
           <p className="font-medium">{planta.difficulty || naoInformado}</p>
@@ -162,7 +162,9 @@ export default function FichaPlanta() {
             <span
               key={i}
               className={`w-6 h-2.5 rounded-full ${
-                i < nivelDificuldade ? 'bg-moss' : 'bg-black/10'
+                i < nivelDificuldade
+                  ? 'bg-moss'
+                  : 'bg-black/10 dark:bg-white/10'
               }`}
             />
           ))}
@@ -171,7 +173,7 @@ export default function FichaPlanta() {
 
       {relacionadas.length > 0 && (
         <div>
-          <h2 className="font-display text-lg font-medium border-b border-black/10 pb-2 mb-3">
+          <h2 className="font-display text-lg font-medium border-b border-black/10 dark:border-white/10 pb-2 mb-3">
             {t('ficha.plantasRelacionadas')}
           </h2>
           <div className="flex gap-3 overflow-x-auto pb-1">
@@ -179,14 +181,14 @@ export default function FichaPlanta() {
               <Link
                 key={r.id}
                 to={`/catalogo/planta/${r.id}`}
-                className="shrink-0 w-32 rounded-xl border border-black/10 p-2 text-center hover:border-moss transition-colors"
+                className="shrink-0 w-32 rounded-xl border border-black/10 dark:border-white/10 p-2 text-center hover:border-moss transition-colors"
               >
                 <FotoPlanta
                   src={r.image_url}
                   alt={r.common_name}
                   className="w-full h-16 object-cover rounded-lg mb-1"
                 />
-                <div className="hidden w-full h-16 rounded-lg bg-sage mb-1" />
+                <div className="hidden w-full h-16 rounded-lg bg-sage dark:bg-forest-light mb-1" />
                 <p className="text-xs font-medium truncate">{r.common_name}</p>
               </Link>
             ))}

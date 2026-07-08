@@ -72,7 +72,7 @@ export default function EditarPlanta() {
         <h1 className="font-display text-2xl font-semibold">
           Editar {planta.apelido}
         </h1>
-        <p className="text-sm text-ink/60 mt-1">
+        <p className="text-sm text-ink/60 dark:text-cream/60 mt-1">
           Espécie: {planta.especieNome}
         </p>
       </div>
@@ -86,7 +86,7 @@ export default function EditarPlanta() {
             id="apelido"
             value={apelido}
             onChange={(e) => setApelido(e.target.value)}
-            className="w-full px-3 py-2.5 rounded-xl border border-moss/30 bg-white outline-none focus:border-moss text-sm"
+            className="w-full px-3 py-2.5 rounded-xl border border-moss/30 bg-white dark:bg-forest-light dark:border-moss/50 dark:text-cream outline-none focus:border-moss text-sm"
           />
         </div>
 
@@ -99,7 +99,7 @@ export default function EditarPlanta() {
             type="date"
             value={dataAquisicao}
             onChange={(e) => setDataAquisicao(e.target.value)}
-            className="w-full px-3 py-2.5 rounded-xl border border-moss/30 bg-white outline-none focus:border-moss text-sm"
+            className="w-full px-3 py-2.5 rounded-xl border border-moss/30 bg-white dark:bg-forest-light dark:border-moss/50 dark:text-cream outline-none focus:border-moss text-sm"
           />
         </div>
 
@@ -115,7 +115,7 @@ export default function EditarPlanta() {
             min="1"
             value={frequencia}
             onChange={(e) => setFrequencia(e.target.value)}
-            className="w-full px-3 py-2.5 rounded-xl border border-moss/30 bg-white outline-none focus:border-moss text-sm"
+            className="w-full px-3 py-2.5 rounded-xl border border-moss/30 bg-white dark:bg-forest-light dark:border-moss/50 dark:text-cream outline-none focus:border-moss text-sm"
           />
         </div>
 
@@ -139,7 +139,9 @@ export default function EditarPlanta() {
             </button>
           ) : (
             <div className="flex items-center gap-2 text-sm">
-              <span className="text-ink/60">Tem certeza?</span>
+              <span className="text-ink/60 dark:text-cream/60">
+                Tem certeza?
+              </span>
               <button
                 type="button"
                 onClick={handleExcluir}
@@ -150,7 +152,7 @@ export default function EditarPlanta() {
               <button
                 type="button"
                 onClick={() => setConfirmandoExclusao(false)}
-                className="text-ink/60 hover:underline"
+                className="text-ink/60 dark:text-cream/60 hover:underline"
               >
                 Cancelar
               </button>

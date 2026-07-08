@@ -5,9 +5,14 @@
 html {
   scroll-behavior: smooth;
 }
+
 body {
-  @apply bg-cream text-ink font-body antialiased;
+  @apply bg-cream text-ink font-body antialiased dark:bg-forest-dark dark:text-cream;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
+
 h1,
 h2,
 h3,
@@ -15,6 +20,7 @@ h4 {
   @apply font-display;
 }
 
+/* Visible keyboard focus */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,

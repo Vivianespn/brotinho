@@ -58,15 +58,15 @@ export default function SeletorEspecie({ especieSelecionada, onSelecionar }) {
 
   if (especieSelecionada) {
     return (
-      <div className="flex items-center justify-between gap-3 rounded-xl border border-moss/40 bg-sage p-3">
+      <div className="flex items-center justify-between gap-3 rounded-xl border border-moss/40 bg-sage dark:bg-forest p-3">
         <div className="flex items-center gap-2 min-w-0">
           <Check className="w-4 h-4 text-moss shrink-0" />
           <div className="min-w-0">
-            <p className="font-medium truncate">
+            <p className="font-medium text-ink dark:text-cream truncate">
               {especieSelecionada.especieNome}
             </p>
             {especieSelecionada.cientifico && (
-              <p className="text-xs italic text-ink/50 truncate">
+              <p className="text-xs italic text-ink/50 dark:text-cream/50 truncate">
                 {especieSelecionada.cientifico}
               </p>
             )}
@@ -75,7 +75,7 @@ export default function SeletorEspecie({ especieSelecionada, onSelecionar }) {
         <button
           type="button"
           onClick={() => onSelecionar(null)}
-          className="p-1.5 rounded-full hover:bg-black/5 shrink-0"
+          className="p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 text-ink dark:text-cream shrink-0"
           aria-label="Trocar espécie"
         >
           <X className="w-4 h-4" />
@@ -87,42 +87,42 @@ export default function SeletorEspecie({ especieSelecionada, onSelecionar }) {
   return (
     <div>
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink/40" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink/40 dark:text-cream/40" />
         <input
           value={termo}
           onChange={(e) => setTermo(e.target.value)}
           placeholder="Buscar espécie no catálogo…"
           disabled={confirmandoEspecie}
-          className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-moss/30 bg-white outline-none focus:border-moss text-sm disabled:opacity-60"
+          className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-moss/30 bg-white dark:bg-forest-light dark:border-moss/50 dark:text-cream outline-none focus:border-moss text-sm disabled:opacity-60"
         />
       </div>
 
       {confirmandoEspecie && (
-        <p className="text-xs text-ink/50 mt-2 flex items-center gap-1.5">
+        <p className="text-xs text-ink/50 dark:text-cream/50 mt-2 flex items-center gap-1.5">
           <Loader2 className="w-3.5 h-3.5 animate-spin" />
           Confirmando frequência de rega da espécie…
         </p>
       )}
 
       {buscando && !confirmandoEspecie && (
-        <p className="text-xs text-ink/50 mt-2">Buscando…</p>
+        <p className="text-xs text-ink/50 dark:text-cream/50 mt-2">Buscando…</p>
       )}
 
       {resultados.length > 0 && !confirmandoEspecie && (
-        <ul className="mt-2 border border-black/10 rounded-xl overflow-hidden max-h-56 overflow-y-auto divide-y divide-black/5">
+        <ul className="mt-2 border border-black/10 dark:border-white/10 rounded-xl overflow-hidden max-h-56 overflow-y-auto divide-y divide-black/5 dark:divide-white/10">
           {resultados.map((r) => (
             <li key={r.id}>
               <button
                 type="button"
                 onClick={() => handleSelecionar(r)}
-                className="w-full flex items-center gap-2 p-2 hover:bg-sage text-left text-sm"
+                className="w-full flex items-center gap-2 p-2 hover:bg-sage dark:hover:bg-forest text-ink dark:text-cream text-left text-sm"
               >
                 <FotoPlanta
                   src={r.image_url}
                   alt={r.common_name}
                   className="w-8 h-8 rounded-md object-cover shrink-0"
                 />
-                <div className="hidden w-8 h-8 rounded-md bg-sage shrink-0" />
+                <div className="hidden w-8 h-8 rounded-md bg-sage dark:bg-forest shrink-0" />
                 <span className="truncate">{r.common_name}</span>
               </button>
             </li>

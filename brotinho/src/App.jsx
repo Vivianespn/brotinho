@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { PlantsProvider } from './context/PlantsContext';
+import { ThemeProvider } from './context/ThemeContext';
 import Layout from './components/Layout';
 import Home from './pages/Home';
 import Catalogo from './pages/Catalogo';
@@ -13,28 +14,30 @@ import NotFound from './pages/NotFound';
 
 export default function App() {
   return (
-    <PlantsProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="catalogo" element={<Catalogo />} />
-            <Route path="catalogo/planta/:id" element={<FichaPlanta />} />
-            <Route path="minhas-plantas" element={<MinhasPlantas />} />
-            <Route path="minhas-plantas/nova" element={<NovaPlanta />} />
-            <Route
-              path="minhas-plantas/:id"
-              element={<MinhaPlantaDetalhes />}
-            />
-            <Route
-              path="minhas-plantas/:id/editar"
-              element={<EditarPlanta />}
-            />
-            <Route path="sobre" element={<Sobre />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </PlantsProvider>
+    <ThemeProvider>
+      <PlantsProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="catalogo" element={<Catalogo />} />
+              <Route path="catalogo/planta/:id" element={<FichaPlanta />} />
+              <Route path="minhas-plantas" element={<MinhasPlantas />} />
+              <Route path="minhas-plantas/nova" element={<NovaPlanta />} />
+              <Route
+                path="minhas-plantas/:id"
+                element={<MinhaPlantaDetalhes />}
+              />
+              <Route
+                path="minhas-plantas/:id/editar"
+                element={<EditarPlanta />}
+              />
+              <Route path="sobre" element={<Sobre />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </PlantsProvider>
+    </ThemeProvider>
   );
 }

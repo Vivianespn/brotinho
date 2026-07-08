@@ -66,16 +66,16 @@ export default function MinhaPlantaDetalhes() {
           alt={planta.apelido}
           className="w-24 h-24 rounded-2xl object-cover shrink-0"
         />
-        <div className="hidden w-24 h-24 rounded-2xl bg-sage shrink-0" />
+        <div className="hidden w-24 h-24 rounded-2xl bg-sage dark:bg-forest-light shrink-0" />
 
         <div className="flex-1 min-w-[12rem]">
           <h1 className="font-display text-2xl font-semibold">
             {planta.apelido}
           </h1>
-          <p className="text-sm text-ink/50 italic">
+          <p className="text-sm text-ink/50 dark:text-cream/50 italic">
             {planta.cientifico || planta.especieNome}
           </p>
-          <p className="text-xs text-ink/50 mt-1">
+          <p className="text-xs text-ink/50 dark:text-cream/50 mt-1">
             {formatarUltimaRega(planta.ultimaRega)} · rega a cada{' '}
             {planta.frequenciaRegaDias} dias
           </p>
@@ -83,13 +83,13 @@ export default function MinhaPlantaDetalhes() {
 
         <Link
           to={`/minhas-plantas/${id}/editar`}
-          className="flex items-center gap-1.5 px-4 py-2 rounded-full border border-moss/30 text-sm font-medium hover:bg-sage transition-colors shrink-0"
+          className="flex items-center gap-1.5 px-4 py-2 rounded-full border border-moss/30 text-ink dark:text-cream text-sm font-medium hover:bg-sage dark:hover:bg-forest transition-colors shrink-0"
         >
           <Pencil className="w-4 h-4" /> Editar
         </Link>
       </div>
 
-      <div className="rounded-2xl border border-black/10 p-4">
+      <div className="rounded-2xl border border-black/10 dark:border-white/10 p-4">
         <BarraSaude saude={saude} />
         <button
           onClick={() => registrarRega(id)}
@@ -100,7 +100,7 @@ export default function MinhaPlantaDetalhes() {
       </div>
 
       <div>
-        <h2 className="font-display text-lg font-medium border-b border-black/10 pb-2 mb-3">
+        <h2 className="font-display text-lg font-medium border-b border-black/10 dark:border-white/10 pb-2 mb-3">
           Diário da planta
         </h2>
 
@@ -109,7 +109,7 @@ export default function MinhaPlantaDetalhes() {
             value={texto}
             onChange={(e) => setTexto(e.target.value)}
             placeholder="Escreva uma anotação (ex: apareceu uma folha nova!)"
-            className="flex-1 px-3 py-2.5 rounded-xl border border-moss/30 bg-white outline-none focus:border-moss text-sm"
+            className="flex-1 px-3 py-2.5 rounded-xl border border-moss/30 bg-white dark:bg-forest-light dark:border-moss/50 dark:text-cream outline-none focus:border-moss text-sm"
           />
           <button
             type="submit"
@@ -120,7 +120,7 @@ export default function MinhaPlantaDetalhes() {
         </form>
 
         {planta.diario.length === 0 ? (
-          <p className="text-sm text-ink/50">
+          <p className="text-sm text-ink/50 dark:text-cream/50">
             Nenhuma anotação ainda. Registre o que observar na sua planta.
           </p>
         ) : (
@@ -128,18 +128,18 @@ export default function MinhaPlantaDetalhes() {
             {planta.diario.map((nota) => (
               <li
                 key={nota.id}
-                className="flex items-start justify-between gap-3 rounded-xl bg-sage p-3"
+                className="flex items-start justify-between gap-3 rounded-xl bg-sage dark:bg-forest-light p-3"
               >
                 <div>
                   <p className="text-sm">{nota.texto}</p>
-                  <p className="text-xs text-ink/50 mt-1">
+                  <p className="text-xs text-ink/50 dark:text-cream/50 mt-1">
                     {formatarData(nota.data)}
                   </p>
                 </div>
                 <button
                   onClick={() => removerAnotacao(id, nota.id)}
                   aria-label="Excluir anotação"
-                  className="p-1.5 rounded-full hover:bg-black/5 shrink-0"
+                  className="p-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/10 shrink-0"
                 >
                   <Trash2 className="w-3.5 h-3.5 text-critical" />
                 </button>

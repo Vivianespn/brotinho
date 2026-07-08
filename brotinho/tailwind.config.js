@@ -5,18 +5,42 @@ export default {
   theme: {
     extend: {
       colors: {
-        forest: { DEFAULT: '#1F3D2B', light: '#2C5239', dark: '#142B1D' },
-        moss: { DEFAULT: '#4C7A54', light: '#6B9873', dark: '#3A5F41' },
-        sage: { DEFAULT: '#E8EFE4', dark: '#D3E0CC' },
-        clay: { DEFAULT: '#C1693B', light: '#D98A5F', dark: '#A0522C' },
+        forest: {
+          DEFAULT: '#1F3D2B',
+          light: '#2C5239',
+          dark: '#142B1D',
+        },
+        moss: {
+          DEFAULT: '#4C7A54',
+          light: '#6B9873',
+          dark: '#3A5F41',
+        },
+        sage: {
+          DEFAULT: '#E8EFE4',
+          dark: '#D3E0CC',
+        },
+        clay: {
+          DEFAULT: '#C1693B',
+          light: '#D98A5F',
+          dark: '#A0522C',
+        },
         cream: '#FAF8F3',
         ink: '#22281F',
-        warn: { DEFAULT: '#D9A441', bg: '#FBF1DC' },
-        critical: { DEFAULT: '#C1473B', bg: '#FBE4E1' },
-        ok: { DEFAULT: '#4C7A54', bg: '#E4EFE0' },
+        warn: {
+          DEFAULT: '#D9A441',
+          bg: '#FBF1DC',
+        },
+        critical: {
+          DEFAULT: '#C1473B',
+          bg: '#FBE4E1',
+        },
+        ok: {
+          DEFAULT: '#4C7A54',
+          bg: '#E4EFE0',
+        },
       },
       fontFamily: {
-        display: ["'Fraunces'", 'serif'],
+        display: ["'Lora'", 'serif'],
         body: ["'Work Sans'", 'sans-serif'],
       },
       keyframes: {

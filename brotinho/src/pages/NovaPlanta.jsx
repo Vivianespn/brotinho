@@ -84,7 +84,7 @@ export default function NovaPlanta() {
         <h1 className="font-display text-2xl font-semibold">
           Cadastrar planta
         </h1>
-        <p className="text-sm text-ink/60 mt-1">
+        <p className="text-sm text-ink/60 dark:text-cream/60 mt-1">
           Dê um apelido e vincule à espécie certa para receber os cuidados
           corretos.
         </p>
@@ -108,7 +108,7 @@ export default function NovaPlanta() {
             value={apelido}
             onChange={(e) => setApelido(e.target.value)}
             placeholder="Ex: Jiboinha da sala"
-            className="w-full px-3 py-2.5 rounded-xl border border-moss/30 bg-white outline-none focus:border-moss text-sm"
+            className="w-full px-3 py-2.5 rounded-xl border border-moss/30 bg-white dark:bg-forest-light dark:border-moss/50 dark:text-cream outline-none focus:border-moss text-sm"
           />
         </div>
 
@@ -121,7 +121,7 @@ export default function NovaPlanta() {
             type="date"
             value={dataAquisicao}
             onChange={(e) => setDataAquisicao(e.target.value)}
-            className="w-full px-3 py-2.5 rounded-xl border border-moss/30 bg-white outline-none focus:border-moss text-sm"
+            className="w-full px-3 py-2.5 rounded-xl border border-moss/30 bg-white dark:bg-forest-light dark:border-moss/50 dark:text-cream outline-none focus:border-moss text-sm"
           />
         </div>
 
@@ -136,10 +136,10 @@ export default function NovaPlanta() {
               min="1"
               value={frequenciaManual ?? ''}
               onChange={(e) => setFrequenciaManual(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-xl border border-moss/30 bg-white outline-none focus:border-moss text-sm"
+              className="w-full px-3 py-2.5 rounded-xl border border-moss/30 bg-white dark:bg-forest-light dark:border-moss/50 dark:text-cream outline-none focus:border-moss text-sm"
             />
             {especie.frequenciaEstimada && (
-              <p className="text-xs text-ink/50 mt-1.5 flex items-start gap-1.5">
+              <p className="text-xs text-ink/50 dark:text-cream/50 mt-1.5 flex items-start gap-1.5">
                 <Info className="w-3.5 h-3.5 mt-0.5 shrink-0" />
                 Não foi possível confirmar a frequência real dessa espécie na
                 API agora — 7 dias é só um valor de partida. Ajuste aqui se você
@@ -151,7 +151,7 @@ export default function NovaPlanta() {
 
         <SeletorFoto valor={foto} onChange={setFoto} />
         {!foto && especie?.foto && (
-          <p className="text-xs text-ink/50 -mt-2">
+          <p className="text-xs text-ink/50 dark:text-cream/50 -mt-2">
             Sem upload, vamos usar a foto da espécie automaticamente.
           </p>
         )}

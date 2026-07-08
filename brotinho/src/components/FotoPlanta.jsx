@@ -8,7 +8,7 @@ export default function FotoPlanta({ src, alt, className = '' }) {
         role="img"
         aria-label={`Foto indisponível para ${alt}`}
       >
-        <Leaf className="w-8 h-8 text-moss/60" />
+        <Leaf className="w-8 h-8 text-moss/60 dark:text-moss-light/60" />
       </div>
     );
   }

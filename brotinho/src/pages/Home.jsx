@@ -30,11 +30,11 @@ export default function Home() {
 
   return (
     <div className="flex flex-col gap-12">
-      <section className="rounded-3xl bg-sage px-6 sm:px-10 py-12 text-center">
-        <h1 className="font-display text-3xl sm:text-4xl font-semibold text-forest">
+      <section className="rounded-3xl bg-sage dark:bg-forest-light px-6 sm:px-10 py-12 text-center">
+        <h1 className="font-display text-3xl sm:text-4xl font-semibold text-forest dark:text-cream">
           {t('home.titulo')}
         </h1>
-        <p className="text-ink/70 mt-2 max-w-lg mx-auto">
+        <p className="text-ink/70 dark:text-cream/70 mt-2 max-w-lg mx-auto">
           {t('home.subtitulo')}
         </p>
         <div className="mt-6 max-w-md mx-auto">
@@ -74,7 +74,7 @@ export default function Home() {
         </div>
         {plantas.length === 0 ? (
           <div className="rounded-2xl border-2 border-dashed border-moss/30 p-8 text-center">
-            <p className="text-sm text-ink/60 mb-3">
+            <p className="text-sm text-ink/60 dark:text-cream/60 mb-3">
               Você ainda não cadastrou nenhuma planta.
             </p>
             <Link
