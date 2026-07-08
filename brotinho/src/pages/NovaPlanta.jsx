@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useNavigate, useSearchParams, Link } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Info } from 'lucide-react';
 import SeletorEspecie from '../components/SeletorEspecie';
 import SeletorFoto from '../components/SeletorFoto';
 import { usePlants } from '../context/PlantsContext';
+import { baixarImagemComoBase64 } from '../utils/imagem';
 
 export default function NovaPlanta() {
   const [searchParams] = useSearchParams();
@@ -24,9 +25,18 @@ export default function NovaPlanta() {
   const [apelido, setApelido] = useState('');
   const [dataAquisicao, setDataAquisicao] = useState('');
   const [foto, setFoto] = useState(null);
+  const [frequenciaManual, setFrequenciaManual] = useState(
+    prefill?.frequenciaRegaDias || null,
+  );
   const [erro, setErro] = useState('');
+  const [salvando, setSalvando] = useState(false);
 
-  function handleSubmit(e) {
+  function handleSelecionarEspecie(novaEspecie) {
+    setEspecie(novaEspecie);
+    setFrequenciaManual(novaEspecie?.frequenciaRegaDias || null);
+  }
+
+  async function handleSubmit(e) {
     e.preventDefault();
     if (!apelido.trim()) {
       setErro('Dê um apelido para a sua planta.');
@@ -36,17 +46,28 @@ export default function NovaPlanta() {
       setErro('Selecione a espécie da sua planta.');
       return;
     }
+
+    setErro('');
+    setSalvando(true);
+
+    let fotoFinal = foto;
+    if (!fotoFinal && especie.foto) {
+      fotoFinal = await baixarImagemComoBase64(especie.foto);
+    }
+
     const id = adicionarPlanta({
       apelido: apelido.trim(),
       especieId: especie.especieId,
       especieNome: especie.especieNome,
       cientifico: especie.cientifico,
-      frequenciaRegaDias: especie.frequenciaRegaDias,
+      frequenciaRegaDias: Number(frequenciaManual) || 7,
       dataAquisicao: dataAquisicao
         ? new Date(dataAquisicao).toISOString()
         : null,
-      foto: foto || especie.foto || null,
+      foto: fotoFinal || null,
     });
+
+    setSalvando(false);
     navigate(`/minhas-plantas/${id}`);
   }
 
@@ -74,7 +95,7 @@ export default function NovaPlanta() {
           <label className="text-sm font-medium block mb-1.5">Espécie</label>
           <SeletorEspecie
             especieSelecionada={especie}
-            onSelecionar={setEspecie}
+            onSelecionar={handleSelecionarEspecie}
           />
         </div>
 
@@ -104,15 +125,45 @@ export default function NovaPlanta() {
           />
         </div>
 
+        {especie && (
+          <div>
+            <label htmlFor="freq" className="text-sm font-medium block mb-1.5">
+              Frequência de rega (dias)
+            </label>
+            <input
+              id="freq"
+              type="number"
+              min="1"
+              value={frequenciaManual ?? ''}
+              onChange={(e) => setFrequenciaManual(e.target.value)}
+              className="w-full px-3 py-2.5 rounded-xl border border-moss/30 bg-white outline-none focus:border-moss text-sm"
+            />
+            {especie.frequenciaEstimada && (
+              <p className="text-xs text-ink/50 mt-1.5 flex items-start gap-1.5">
+                <Info className="w-3.5 h-3.5 mt-0.5 shrink-0" />
+                Não foi possível confirmar a frequência real dessa espécie na
+                API agora — 7 dias é só um valor de partida. Ajuste aqui se você
+                souber com que frequência ela precisa de água.
+              </p>
+            )}
+          </div>
+        )}
+
         <SeletorFoto valor={foto} onChange={setFoto} />
+        {!foto && especie?.foto && (
+          <p className="text-xs text-ink/50 -mt-2">
+            Sem upload, vamos usar a foto da espécie automaticamente.
+          </p>
+        )}
 
         {erro && <p className="text-sm text-critical">{erro}</p>}
 
         <button
           type="submit"
-          className="mt-2 px-5 py-2.5 rounded-full bg-moss text-white text-sm font-medium hover:bg-moss-dark transition-colors"
+          disabled={salvando}
+          className="mt-2 px-5 py-2.5 rounded-full bg-moss text-white text-sm font-medium hover:bg-moss-dark transition-colors disabled:opacity-60"
         >
-          Cadastrar planta
+          {salvando ? 'Salvando…' : 'Cadastrar planta'}
         </button>
       </form>
     </div>

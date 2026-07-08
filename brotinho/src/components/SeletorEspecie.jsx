@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { Search, Check, X } from 'lucide-react';
+import { Search, Check, X, Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { buscarPlantas } from '../services/perenualApi';
+import { buscarPlantas, buscarDetalhesPlanta } from '../services/perenualApi';
 import FotoPlanta from './FotoPlanta';
 
 export default function SeletorEspecie({ especieSelecionada, onSelecionar }) {
@@ -9,6 +9,7 @@ export default function SeletorEspecie({ especieSelecionada, onSelecionar }) {
   const [termo, setTermo] = useState('');
   const [resultados, setResultados] = useState([]);
   const [buscando, setBuscando] = useState(false);
+  const [confirmandoEspecie, setConfirmandoEspecie] = useState(false);
 
   useEffect(() => {
     if (termo.trim().length < 2) {
@@ -24,6 +25,36 @@ export default function SeletorEspecie({ especieSelecionada, onSelecionar }) {
     }, 350);
     return () => clearTimeout(debounce);
   }, [termo, i18n.language]);
+
+  // A busca (species-list) não traz frequência de rega real — só o endpoint
+  // de detalhes tem isso. Então, ao escolher uma espécie sem esse dado,
+  // buscamos os detalhes completos antes de confirmar a seleção.
+  async function handleSelecionar(r) {
+    let frequenciaRegaDias = r.watering_days;
+    let frequenciaEstimada = false;
+
+    if (!frequenciaRegaDias) {
+      setConfirmandoEspecie(true);
+      const detalhes = await buscarDetalhesPlanta(r.id, i18n.language);
+      setConfirmandoEspecie(false);
+
+      if (detalhes?.watering_days) {
+        frequenciaRegaDias = detalhes.watering_days;
+      } else {
+        frequenciaRegaDias = 7;
+        frequenciaEstimada = true;
+      }
+    }
+
+    onSelecionar({
+      especieId: r.id,
+      especieNome: r.common_name,
+      cientifico: r.scientific_name?.[0] || '',
+      frequenciaRegaDias,
+      frequenciaEstimada,
+      foto: r.image_url,
+    });
+  }
 
   if (especieSelecionada) {
     return (
@@ -61,25 +92,29 @@ export default function SeletorEspecie({ especieSelecionada, onSelecionar }) {
           value={termo}
           onChange={(e) => setTermo(e.target.value)}
           placeholder="Buscar espécie no catálogo…"
-          className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-moss/30 bg-white outline-none focus:border-moss text-sm"
+          disabled={confirmandoEspecie}
+          className="w-full pl-9 pr-3 py-2.5 rounded-xl border border-moss/30 bg-white outline-none focus:border-moss text-sm disabled:opacity-60"
         />
       </div>
-      {buscando && <p className="text-xs text-ink/50 mt-2">Buscando…</p>}
-      {resultados.length > 0 && (
+
+      {confirmandoEspecie && (
+        <p className="text-xs text-ink/50 mt-2 flex items-center gap-1.5">
+          <Loader2 className="w-3.5 h-3.5 animate-spin" />
+          Confirmando frequência de rega da espécie…
+        </p>
+      )}
+
+      {buscando && !confirmandoEspecie && (
+        <p className="text-xs text-ink/50 mt-2">Buscando…</p>
+      )}
+
+      {resultados.length > 0 && !confirmandoEspecie && (
         <ul className="mt-2 border border-black/10 rounded-xl overflow-hidden max-h-56 overflow-y-auto divide-y divide-black/5">
           {resultados.map((r) => (
             <li key={r.id}>
               <button
                 type="button"
-                onClick={() =>
-                  onSelecionar({
-                    especieId: r.id,
-                    especieNome: r.common_name,
-                    cientifico: r.scientific_name?.[0] || '',
-                    frequenciaRegaDias: r.watering_days,
-                    foto: r.image_url,
-                  })
-                }
+                onClick={() => handleSelecionar(r)}
                 className="w-full flex items-center gap-2 p-2 hover:bg-sage text-left text-sm"
               >
                 <FotoPlanta

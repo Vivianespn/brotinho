@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Sun, Droplet, AlertTriangle } from 'lucide-react';
+import { Sun, Droplet, AlertTriangle, Info } from 'lucide-react';
 import FotoPlanta from './FotoPlanta';
 
 export default function CardCatalogo({ planta }) {
@@ -37,20 +37,32 @@ export default function CardCatalogo({ planta }) {
         {/* Verso — resumo de cuidados (NICE-02) */}
         <div className="flip-card-back absolute inset-0 rounded-2xl bg-forest text-cream p-4 flex flex-col justify-center gap-3">
           <p className="font-display font-medium mb-1">{planta.common_name}</p>
-          <div className="flex items-center gap-2 text-sm">
-            <Sun className="w-4 h-4 text-warn" />
-            <span>{planta.sunlight?.[0] || 'indireta'}</span>
-          </div>
-          <div className="flex items-center gap-2 text-sm">
-            <Droplet className="w-4 h-4 text-moss-light" />
-            <span>{t('ficha.aCadaDias', { dias: planta.watering_days })}</span>
-          </div>
-          <div className="flex items-center gap-2 text-sm">
-            <AlertTriangle className="w-4 h-4 text-critical" />
-            <span>
-              {planta.toxic ? t('ficha.toxica') : t('ficha.naoToxica')}
-            </span>
-          </div>
+
+          {planta.dadosCompletos === false ? (
+            <div className="flex items-center gap-2 text-sm text-cream/70">
+              <Info className="w-4 h-4" />
+              <span>Toque para ver a ficha completa</span>
+            </div>
+          ) : (
+            <>
+              <div className="flex items-center gap-2 text-sm">
+                <Sun className="w-4 h-4 text-warn" />
+                <span>{planta.sunlight?.[0] || 'indireta'}</span>
+              </div>
+              <div className="flex items-center gap-2 text-sm">
+                <Droplet className="w-4 h-4 text-moss-light" />
+                <span>
+                  {t('ficha.aCadaDias', { dias: planta.watering_days })}
+                </span>
+              </div>
+              <div className="flex items-center gap-2 text-sm">
+                <AlertTriangle className="w-4 h-4 text-critical" />
+                <span>
+                  {planta.toxic ? t('ficha.toxica') : t('ficha.naoToxica')}
+                </span>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </Link>

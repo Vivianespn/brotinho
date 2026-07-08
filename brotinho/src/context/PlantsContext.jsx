@@ -5,6 +5,7 @@ import {
   useState,
   useCallback,
 } from 'react';
+import { baixarImagemComoBase64 } from '../utils/imagem';
 
 const PlantsContext = createContext(null);
 const STORAGE_KEY = 'brotinho:minhas-plantas';
@@ -33,6 +34,25 @@ export function PlantsProvider({ children }) {
   useEffect(() => {
     salvarNoStorage(plantas);
   }, [plantas]);
+
+  // Auto-reparo: plantas cadastradas antes dessa correção podem ter salvo o
+  // link temporário da foto da espécie (que expira em ~24h). Ao carregar o
+  // app, baixamos essas fotos e convertemos pra base64 permanente, uma vez.
+  useEffect(() => {
+    const comFotoExterna = carregarDoStorage().filter((p) =>
+      p.foto?.startsWith('http'),
+    );
+
+    comFotoExterna.forEach((planta) => {
+      baixarImagemComoBase64(planta.foto).then((base64) => {
+        if (!base64) return; // link já expirado ou falha de rede — deixa como está
+        setPlantas((atual) =>
+          atual.map((p) => (p.id === planta.id ? { ...p, foto: base64 } : p)),
+        );
+      });
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // roda só uma vez, ao carregar o app
 
   const adicionarPlanta = useCallback((dados) => {
     const novaPlanta = {

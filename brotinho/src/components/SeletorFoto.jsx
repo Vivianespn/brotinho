@@ -1,33 +1,7 @@
 import { useRef, useState } from 'react';
 import { ImagePlus, X } from 'lucide-react';
 import FotoPlanta from './FotoPlanta';
-
-const LARGURA_MAXIMA = 800; // px — suficiente pra tela, bem mais leve que a foto original
-const QUALIDADE_JPEG = 0.75;
-
-// Redimensiona e comprime a imagem no navegador antes de virar base64,
-// pra não estourar o limite do localStorage com fotos em alta resolução.
-function comprimirImagem(arquivo) {
-  return new Promise((resolve, reject) => {
-    const leitor = new FileReader();
-    leitor.onerror = () => reject(new Error('Não foi possível ler o arquivo.'));
-    leitor.onload = () => {
-      const img = new Image();
-      img.onerror = () => reject(new Error('Arquivo não é uma imagem válida.'));
-      img.onload = () => {
-        const escala = Math.min(1, LARGURA_MAXIMA / img.width);
-        const canvas = document.createElement('canvas');
-        canvas.width = img.width * escala;
-        canvas.height = img.height * escala;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        resolve(canvas.toDataURL('image/jpeg', QUALIDADE_JPEG));
-      };
-      img.src = leitor.result;
-    };
-    leitor.readAsDataURL(arquivo);
-  });
-}
+import { comprimirImagem } from '../utils/imagem';
 
 export default function SeletorFoto({ valor, onChange, label = 'Foto' }) {
   const inputRef = useRef(null);

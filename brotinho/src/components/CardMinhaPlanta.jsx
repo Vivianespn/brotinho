@@ -1,13 +1,25 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Droplet, Pencil } from 'lucide-react';
+import { Droplet, Pencil, AlertTriangle } from 'lucide-react';
 import FotoPlanta from './FotoPlanta';
-import { formatarUltimaRega } from '../utils/tempo';
+import BarraSaude from './BarraSaude';
+import { diasDesde, formatarUltimaRega } from '../utils/tempo';
+import { calcularSaude, estaAtrasada } from '../utils/saude';
 import { usePlants } from '../context/PlantsContext';
+
+const BORDA = {
+  bem: 'border-ok/40',
+  atencao: 'border-warn/50',
+  critico: 'border-critical/50',
+};
 
 export default function CardMinhaPlanta({ planta }) {
   const { registrarRega } = usePlants();
   const [gotinhas, setGotinhas] = useState([]);
+
+  const saude = calcularSaude(planta.ultimaRega, planta.frequenciaRegaDias);
+  const atrasada = estaAtrasada(planta.ultimaRega, planta.frequenciaRegaDias);
+  const dias = diasDesde(planta.ultimaRega);
 
   function handleRegar() {
     registrarRega(planta.id);
@@ -17,7 +29,16 @@ export default function CardMinhaPlanta({ planta }) {
   }
 
   return (
-    <div className="rounded-2xl border border-black/10 bg-white p-4 flex flex-col gap-3 shadow-sm">
+    <div
+      className={`relative rounded-2xl border-2 ${BORDA[saude.estado]} bg-white p-4 flex flex-col gap-3 shadow-sm`}
+    >
+      {atrasada && (
+        <span className="absolute -top-2 -right-2 flex items-center gap-1 bg-critical text-white text-[11px] font-semibold px-2 py-1 rounded-full animate-pulse-badge shadow">
+          <AlertTriangle className="w-3 h-3" />
+          Atrasada · {dias}d
+        </span>
+      )}
+
       <div className="flex gap-3">
         <FotoPlanta
           src={planta.foto}
@@ -35,6 +56,8 @@ export default function CardMinhaPlanta({ planta }) {
           </p>
         </div>
       </div>
+
+      <BarraSaude saude={saude} compacta />
 
       <div className="flex items-center gap-2 flex-wrap">
         <button

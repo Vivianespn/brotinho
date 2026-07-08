@@ -1,9 +1,6 @@
 import plantasMock from '../data/plantasMock.json';
 import { traduzirParaPt, traduzirParaEn } from './traduzirTexto';
-import {
-  traduzirSunlight,
-  traduzirDificuldade,
-} from '../utils/dicionarioCuidados';
+import { traduzirSunlight, mapearCareLevel } from '../utils/dicionarioCuidados';
 
 const BASE_URL = 'https://perenual.com/api';
 const API_KEY = import.meta.env.VITE_PERENUAL_API_KEY;
@@ -33,6 +30,22 @@ function salvarCache(chave, dados) {
   }
 }
 
+// Erro especial pra distinguir "limite diário estourado" de qualquer outra
+// falha (rede fora do ar, chave inválida etc), já que a mensagem certa pro
+// usuário é bem diferente em cada caso.
+class LimiteApiExcedidoError extends Error {}
+
+async function chamarApi(url) {
+  const resp = await fetch(url);
+  if (resp.status === 429) {
+    throw new LimiteApiExcedidoError('Limite diário da API Perenual atingido');
+  }
+  if (!resp.ok) {
+    throw new Error('Falha na API Perenual');
+  }
+  return resp.json();
+}
+
 const DIAS_REGA_POR_FREQUENCIA = {
   Frequent: 3,
   Average: 7,
@@ -40,7 +53,20 @@ const DIAS_REGA_POR_FREQUENCIA = {
   None: 30,
 };
 
-// Dados mockados já vêm em pt/en prontos — não precisa de tradução automática.
+function calcularDiasRega(item) {
+  const benchmark = item.watering_general_benchmark;
+  if (benchmark?.value) {
+    const numeros = String(benchmark.value).match(/\d+/g);
+    if (numeros) {
+      const media =
+        numeros.reduce((soma, n) => soma + Number(n), 0) / numeros.length;
+      const unidade = (benchmark.unit || 'days').toLowerCase();
+      return Math.round(unidade.includes('week') ? media * 7 : media);
+    }
+  }
+  return DIAS_REGA_POR_FREQUENCIA[item.watering] || 7;
+}
+
 function normalizarEspecieMock(item, idioma) {
   return {
     id: item.id,
@@ -53,32 +79,44 @@ function normalizarEspecieMock(item, idioma) {
     difficulty: item.difficulty[idioma] || item.difficulty.pt,
     toxic: item.toxic,
     temperature: item.temperature,
+    dadosCompletos: true,
   };
 }
 
-// Dados reais da Perenual vêm sempre em inglês. Se o idioma pedido for
-// português, traduzimos o nome (texto livre) e usamos o dicionário para
-// luminosidade/dificuldade (valores fixos, mais confiável que tradução automática).
 async function normalizarEspecieApi(item, idioma) {
   const nomeOriginal = item.common_name || 'Unnamed plant';
-  const sunlightOriginal = item.sunlight || ['indirect light'];
-  const dificuldadeOriginal = item.difficulty || 'Moderate';
-
   const common_name =
     idioma === 'pt' ? await traduzirParaPt(nomeOriginal) : nomeOriginal;
-
-  return {
+  const base = {
     id: String(item.id),
     common_name,
     scientific_name: item.scientific_name || [],
     image_url: item.default_image?.regular_url || item.image_url || null,
-    sunlight: traduzirSunlight(sunlightOriginal, idioma),
-    watering: item.watering || 'Average',
-    watering_days:
-      item.watering_days || DIAS_REGA_POR_FREQUENCIA[item.watering] || 7,
-    difficulty: traduzirDificuldade(dificuldadeOriginal, idioma),
-    toxic: Boolean(item.poisonous_to_pets ?? item.toxic ?? false),
-    temperature: item.temperature || '15°C - 30°C',
+  };
+
+  const temDetalhes =
+    'sunlight' in item || 'watering_general_benchmark' in item;
+  if (!temDetalhes) {
+    return {
+      ...base,
+      sunlight: null,
+      watering_days: null,
+      difficulty: null,
+      toxic: null,
+      dadosCompletos: false,
+    };
+  }
+
+  return {
+    ...base,
+    sunlight: traduzirSunlight(item.sunlight || ['indirect light'], idioma),
+    watering_days: calcularDiasRega(item),
+    difficulty: mapearCareLevel(item.care_level, idioma),
+    toxic:
+      item.poisonous_to_pets === undefined
+        ? null
+        : Boolean(item.poisonous_to_pets),
+    dadosCompletos: true,
   };
 }
 
@@ -93,9 +131,11 @@ function filtrarMock(query) {
   );
 }
 
+// "fonte" agora pode ser: 'api' (dado real), 'cache' (já buscado antes),
+// 'mock' (sem chave configurada), ou 'limite' (chave configurada, mas
+// bateu no limite diário — cai pro mock só como último recurso).
 export async function buscarPlantas(query, idioma = 'pt') {
   if (!API_KEY) {
-    // O mock já tem pt/en, então busca funciona nos dois idiomas sem tradução.
     return {
       resultados: filtrarMock(query).map((p) =>
         normalizarEspecieMock(p, idioma),
@@ -104,32 +144,28 @@ export async function buscarPlantas(query, idioma = 'pt') {
     };
   }
 
-  // A Perenual só entende inglês — se a interface está em PT, traduz o termo
-  // de busca antes de consultar, senão "cacto rosa" nunca encontraria nada.
   const queryParaApi = idioma === 'pt' ? await traduzirParaEn(query) : query;
-
   const chaveCache = `busca:${idioma}:${queryParaApi.toLowerCase()}`;
   const cacheado = lerCache(chaveCache);
   if (cacheado) return { resultados: cacheado, fonte: 'cache' };
 
   try {
-    const resp = await fetch(
+    const json = await chamarApi(
       `${BASE_URL}/species-list?key=${API_KEY}&q=${encodeURIComponent(queryParaApi)}`,
     );
-    if (!resp.ok) throw new Error('Falha na API Perenual');
-    const json = await resp.json();
     const resultados = await Promise.all(
       (json.data || []).map((item) => normalizarEspecieApi(item, idioma)),
     );
     salvarCache(chaveCache, resultados);
     return { resultados, fonte: 'api' };
   } catch (erro) {
+    const fonte = erro instanceof LimiteApiExcedidoError ? 'limite' : 'mock';
     console.warn('Perenual API indisponível, usando dados locais:', erro);
     return {
       resultados: filtrarMock(query).map((p) =>
         normalizarEspecieMock(p, idioma),
       ),
-      fonte: 'mock',
+      fonte,
     };
   }
 }
@@ -138,28 +174,27 @@ export async function buscarDetalhesPlanta(id, idioma = 'pt') {
   const mockEncontrado = plantasMock.find((p) => p.id === id);
   if (!API_KEY) {
     return mockEncontrado
-      ? normalizarEspecieMock(mockEncontrado, idioma)
+      ? { ...normalizarEspecieMock(mockEncontrado, idioma), fonte: 'mock' }
       : null;
   }
 
   const chaveCache = `detalhes:${idioma}:${id}`;
   const cacheado = lerCache(chaveCache);
-  if (cacheado) return cacheado;
+  if (cacheado) return { ...cacheado, fonte: 'cache' };
 
   try {
-    const resp = await fetch(
+    const json = await chamarApi(
       `${BASE_URL}/species/details/${id}?key=${API_KEY}`,
     );
-    if (!resp.ok) throw new Error('Falha na API Perenual');
-    const json = await resp.json();
     const normalizado = await normalizarEspecieApi(json, idioma);
     salvarCache(chaveCache, normalizado);
-    return normalizado;
+    return { ...normalizado, fonte: 'api' };
   } catch (erro) {
-    console.warn('Perenual API indisponível, usando dados locais:', erro);
+    const fonte = erro instanceof LimiteApiExcedidoError ? 'limite' : 'mock';
+    console.warn('Perenual API indisponível:', erro);
     return mockEncontrado
-      ? normalizarEspecieMock(mockEncontrado, idioma)
-      : null;
+      ? { ...normalizarEspecieMock(mockEncontrado, idioma), fonte }
+      : { limiteExcedido: fonte === 'limite' };
   }
 }
 
@@ -176,19 +211,20 @@ export async function listarCatalogo(idioma = 'pt') {
   if (cacheado) return { resultados: cacheado, fonte: 'cache' };
 
   try {
-    const resp = await fetch(`${BASE_URL}/species-list?key=${API_KEY}&page=1`);
-    if (!resp.ok) throw new Error('Falha na API Perenual');
-    const json = await resp.json();
+    const json = await chamarApi(
+      `${BASE_URL}/species-list?key=${API_KEY}&page=1`,
+    );
     const resultados = await Promise.all(
       (json.data || []).map((item) => normalizarEspecieApi(item, idioma)),
     );
     salvarCache(chaveCache, resultados);
     return { resultados, fonte: 'api' };
   } catch (erro) {
+    const fonte = erro instanceof LimiteApiExcedidoError ? 'limite' : 'mock';
     console.warn('Perenual API indisponível, usando dados locais:', erro);
     return {
       resultados: plantasMock.map((p) => normalizarEspecieMock(p, idioma)),
-      fonte: 'mock',
+      fonte,
     };
   }
 }
