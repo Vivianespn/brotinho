@@ -7,6 +7,7 @@ SPA em React para descobrir os cuidados de qualquer planta (via [Perenual API](h
 Projeto da disciplina **Desenvolvimento Web Frontend** — UFRN/ECT, Turma T01 (2026.1).
 
 **🔗 Aplicação hospedada:** https://brotinho-dun.vercel.app/
+
 **🎥 Vídeo de apresentação:** [cole aqui o link do vídeo]
 
 ---
@@ -110,15 +111,13 @@ gera a pasta `dist/` com os arquivos estáticos prontos pra publicar. Lembre-se 
 
 ## Uso de Inteligência Artificial
 
-Este projeto foi desenvolvido com apoio do **Claude (Anthropic)** como assistente de programação ao longo de todo o processo, da criação do scaffold inicial até a resolução de bugs de produção (CORS, limite de requisições da API, contraste de cores no dark mode, configuração de deploy).
+Este projeto foi desenvolvido com apoio do **Claude** como assistente de programação ao longo do processo. As principais frentes em que a IA ajudou foram:
 
-De forma geral, o fluxo de trabalho foi:
+- **Internacionalização (PT/EN):** implementação do `react-i18next`, incluindo a tradução tanto dos textos fixos da interface quanto dos dados dinâmicos vindos da Perenual API (nomes de plantas, luminosidade, dificuldade).
 
-1. Eu descrevia a funcionalidade ou o problema encontrado;
-2. A IA sugeria a implementação e explicava as decisões técnicas (ex: por que separar dados de lista e de detalhes da Perenual API, por que comprimir imagens antes de salvar no `localStorage`);
-3. Eu revisava, testava no navegador e pedia ajustes quando o comportamento não era o esperado (ex: cores com baixo contraste no dark mode, cálculo de frequência de rega incorreto).
+- **Contraste e acessibilidade:** ajuste das cores do dark mode.
 
-Todo o código foi revisado e testado por mim antes de ser incorporado ao projeto. Mais detalhes sobre esse processo estão no vídeo de apresentação.
+- **Resolução de bugs:** diagnóstico e correção de problemas encontrados durante o desenvolvimento e o deploy, como bloqueio de CORS ao baixar imagens da API, limite de requisições diárias da Perenual, e falha de build no Vercel.
 
 ## Autora
 
