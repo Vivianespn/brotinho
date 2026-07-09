@@ -8,7 +8,7 @@ Projeto da disciplina **Desenvolvimento Web Frontend** — UFRN/ECT, Turma T01 (
 
 **🔗 Aplicação hospedada:** https://brotinho-dun.vercel.app/
 
-**🎥 Vídeo de apresentação:** [cole aqui o link do vídeo]
+**🎥 Vídeo de apresentação:** https://drive.google.com/file/d/18ohL1aB60KMM46EYbopyNpEvEWELwOEl/view?usp=sharing
 
 ---
 
